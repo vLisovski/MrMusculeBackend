@@ -1,6 +1,6 @@
 package com.lisovski.mrmuscule.services;
 
-import com.lisovski.mrmuscule.dtos.FavoriteProductsResponseDto;
+import com.lisovski.mrmuscule.enums.ProductType;
 import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -17,10 +16,15 @@ public class ProductService {
     private ProductRepository productRepository;
     private ModelMapper modelMapper;
 
-    public List<FavoriteProductsResponseDto> getFavoriteProducts(int userId){
-        List<Product> productList = productRepository.getFavorite(userId);
+    public List<Product> getFavoriteProducts(int userId){
+        return productRepository.getFavorite(userId);
+    }
 
-        return productList.stream().map((product)->
-                modelMapper.map(product,FavoriteProductsResponseDto.class)).collect(Collectors.toList());
+    public List<Product> getPurchasedProducts(int userId){
+        return productRepository.getPurchases(userId);
+    }
+
+    public List<Product> getProductsByCategory(ProductType productType, int limit, int offset){
+        return productRepository.getProductsByCategory(productType.toString(), limit, offset);
     }
 }

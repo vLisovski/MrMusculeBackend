@@ -31,7 +31,7 @@ public class Product {
     private int price;
 
     @Column(name="type")
-    private String type;
+    private ProductType type;
 
     @Column(name="photo_path")
     private String photoPath;

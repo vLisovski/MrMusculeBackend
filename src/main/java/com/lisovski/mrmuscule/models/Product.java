@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-
-import java.lang.annotation.ElementType;
 
 @Data
 @NoArgsConstructor
@@ -31,6 +28,7 @@ public class Product {
     private int price;
 
     @Column(name="type")
+    @Enumerated(EnumType.STRING)
     private ProductType type;
 
     @Column(name="photo_path")

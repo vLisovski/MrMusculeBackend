@@ -1,8 +1,6 @@
 package com.lisovski.mrmuscule.repositories;
 
-import com.lisovski.mrmuscule.enums.ProductType;
 import com.lisovski.mrmuscule.models.Product;
-import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +18,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
             "FROM products pro JOIN purchases pur ON pro.id = pur.product_id AND pur.user_id=:userId",nativeQuery = true)
     List<Product> getPurchases(@Param("userId") int userId);
 
-    @Query(value="SELECT * FROM products WHERE type=cast(:type as product_type) LIMIT :limit OFFSET :offset",nativeQuery = true)
+    @Query(value="SELECT * FROM products WHERE type = cast(:type as product_type) LIMIT :limit OFFSET :offset",nativeQuery = true)
     List<Product> getProductsByCategory(@Param(value = "type") String productType,
                                         @Param(value = "limit") int limit,
                                         @Param(value = "offset") int offset);

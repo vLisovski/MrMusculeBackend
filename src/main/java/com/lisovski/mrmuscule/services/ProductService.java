@@ -14,7 +14,7 @@ import java.util.List;
 public class ProductService {
 
     private ProductRepository productRepository;
-    private ModelMapper modelMapper;
+//    private ModelMapper modelMapper;
 
     public List<Product> getFavoriteProducts(int userId){
         return productRepository.getFavorite(userId);

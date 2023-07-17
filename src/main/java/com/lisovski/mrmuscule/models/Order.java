@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -33,5 +35,14 @@ public class Order {
     private int user_id;
 
     @Column(name="status")
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @ManyToMany
+    @JoinTable(
+            name="orders_products",
+            joinColumns = @JoinColumn(name="order_id"),
+            inverseJoinColumns = @JoinColumn(name="product_id")
+    )
+    private List<Product> ordersList = new ArrayList<>();
 }

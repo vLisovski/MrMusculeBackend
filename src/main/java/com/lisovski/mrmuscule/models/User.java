@@ -34,7 +34,4 @@ public class User {
     @OneToMany(targetEntity = Order.class,cascade = CascadeType.ALL)
     @JoinColumn(name ="user_id",referencedColumnName = "id")
     private List<Order> ordersList;
-
-
-
 }

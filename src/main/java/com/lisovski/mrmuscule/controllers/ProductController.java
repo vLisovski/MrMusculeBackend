@@ -1,7 +1,5 @@
 package com.lisovski.mrmuscule.controllers;
 
-import com.lisovski.mrmuscule.dtos.FavoriteProductsResponseDto;
-import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
 import com.lisovski.mrmuscule.enums.ProductType;
 import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.services.ProductService;

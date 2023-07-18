@@ -4,9 +4,11 @@ import com.lisovski.mrmuscule.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     @Query(value = "SELECT p.id,p.name,p.description,p.price,p.type,p.photo_path FROM products p " +
@@ -14,7 +16,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
             "ON p.id = f.product_id AND f.user_id=:userId",nativeQuery = true)
     List<Product> getFavorite(@Param("userId") int userId);
 
-    @Query(value="SELECT p.id,pro.name,pro.description,pro.price,pro.type,pro.photo_path\n" +
+    @Query(value="SELECT pro.id,pro.name,pro.description,pro.price,pro.type,pro.photo_path\n" +
             "FROM products pro JOIN purchases pur ON pro.id = pur.product_id AND pur.user_id=:userId",nativeQuery = true)
     List<Product> getPurchases(@Param("userId") int userId);
 
@@ -22,4 +24,6 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     List<Product> getProductsByCategory(@Param(value = "type") String productType,
                                         @Param(value = "limit") int limit,
                                         @Param(value = "offset") int offset);
+
+
 }

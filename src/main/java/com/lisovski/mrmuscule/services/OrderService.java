@@ -15,4 +15,8 @@ public class OrderService {
     public List<Order> getOrders(){
         return orderRepository.findAll();
     }
+
+    //TODO сделать добавление заказа (Order)
+    //addOrder(Order order)
+
 }

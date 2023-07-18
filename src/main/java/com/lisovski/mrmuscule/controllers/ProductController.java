@@ -15,16 +15,6 @@ public class ProductController {
 
     private ProductService productService;
 
-    @GetMapping("getFavorite/{userId}")
-    public List<Product> getFavoriteProducts(@PathVariable(name = "userId") int userId) {
-        return productService.getFavoriteProducts(userId);
-    }
-
-    @GetMapping("getPurchases/{userId}")
-    public List<Product> getPurchasedProducts(@PathVariable(name = "userId") int userId) {
-        return productService.getPurchasedProducts(userId);
-    }
-
     @GetMapping("getAll/inventory/{limit}/{offset}")
     public List<Product> getInventoryProducts(@PathVariable(name = "limit") int limit,
                                      @PathVariable(name = "offset") int offset) {
@@ -42,6 +32,8 @@ public class ProductController {
                                          @PathVariable(name = "offset") int offset) {
         return productService.getProductsByCategory(ProductType.clothes,limit,offset);
     }
+
+
 
 
 

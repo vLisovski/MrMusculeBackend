@@ -14,14 +14,6 @@ public class ProductService {
 
     private ProductRepository productRepository;
 
-    public List<Product> getFavoriteProducts(int userId){
-        return productRepository.getFavorite(userId);
-    }
-
-    public List<Product> getPurchasedProducts(int userId){
-        return productRepository.getPurchases(userId);
-    }
-
     public List<Product> getProductsByCategory(ProductType productType, int limit, int offset){
         return productRepository.getProductsByCategory(productType.toString(), limit, offset);
     }

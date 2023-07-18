@@ -24,4 +24,6 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     List<Product> getProductsByCategory(@Param(value = "type") String productType,
                                         @Param(value = "limit") int limit,
                                         @Param(value = "offset") int offset);
+
+
 }

@@ -1,21 +1,13 @@
 package com.lisovski.mrmuscule.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.web.PageableDefault;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Entity
 @Table(name="users")
-public class User {
+public class UserPurchases {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -32,7 +24,11 @@ public class User {
     @Column(name="bonuses")
     private int bonuses;
 
-    @OneToMany(targetEntity = Order.class,cascade = CascadeType.ALL)
-    @JoinColumn(name ="user_id",referencedColumnName = "id")
-    private List<Order> ordersList;
+    @ManyToMany
+    @JoinTable(
+            name="favorite",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="product_id")
+    )
+    private List<Product> purchasesList = new ArrayList<>();
 }

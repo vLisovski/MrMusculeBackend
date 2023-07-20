@@ -39,4 +39,8 @@ public class OrderController {
         //операция добавления продуктов, входящих в заказ, в таблицу orders_products
         ordersProductsList.forEach((ordersProducts -> ordersProductsService.addOrderProductPair(ordersProducts)));
     }
+
+    //TODO deleteOrder
+
+
 }

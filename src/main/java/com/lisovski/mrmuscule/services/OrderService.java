@@ -23,9 +23,4 @@ public class OrderService {
                order.getUser_id(),
                order.getStatus().toString());
     }
-
-    public Order saveOrder(Order order){
-        return orderRepository.save(order);
-    }
-
 }

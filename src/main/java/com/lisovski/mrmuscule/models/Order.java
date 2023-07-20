@@ -1,6 +1,7 @@
 package com.lisovski.mrmuscule.models;
 
 import com.lisovski.mrmuscule.enums.OrderStatus;
+import com.lisovski.mrmuscule.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name="orders")
 public class Order {

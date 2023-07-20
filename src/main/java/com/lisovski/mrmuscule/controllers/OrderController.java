@@ -1,13 +1,15 @@
 package com.lisovski.mrmuscule.controllers;
 
 import com.lisovski.mrmuscule.models.Order;
+import com.lisovski.mrmuscule.models.OrdersProducts;
 import com.lisovski.mrmuscule.services.OrderService;
+import com.lisovski.mrmuscule.services.OrdersProductsService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("orders")
@@ -15,11 +17,30 @@ import java.util.List;
 public class OrderController {
 
     private OrderService orderService;
+    private OrdersProductsService ordersProductsService;
 
     @GetMapping("getOrders")
     public List<Order> getOrdersByUserId() {
         return orderService.getOrders();
     }
+
+    @PostMapping("addOrder")
+    @Transactional
+    public void addNewOrder(@RequestBody Order order){
+        int orderId;
+        //операция сохранения заказа в таблицу orders
+        orderId = orderService.addOrder(order);
+        //здесь собирается лист объектов OrdersProducts
+        List<OrdersProducts> ordersProductsList = order.getProductList().stream()
+                .map((product)-> OrdersProducts.builder()
+                        .orderId(orderId)
+                        .productId(product.getId()).build())
+                .collect(Collectors.toList());
+        //операция добавления продуктов, входящих в заказ, в таблицу orders_products
+        ordersProductsList.forEach((ordersProducts -> ordersProductsService.addOrderProductPair(ordersProducts)));
+    }
+
+    //repository(data bases)->service->controller(url)
 
     //TODO сделать добавление заказа(Order)
     //public int addOrder(Order order)
@@ -52,7 +73,7 @@ public class OrderController {
     //        "photoPath": "https://photolol.com"
     //      }
     //    ]
-    //  }
+    // }
     //http://localhost:8080/orders/addOrder - URL , который должен работать по итогу на добавление заказа
     //раз добавление происходит в две таблицы за 1 запрос, то подумай насчет применения аннотации @Transactional
 }

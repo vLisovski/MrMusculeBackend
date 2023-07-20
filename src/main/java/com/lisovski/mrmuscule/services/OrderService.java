@@ -16,7 +16,16 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    //TODO сделать добавление заказа (Order)
-    //addOrder(Order order)
+    public int addOrder(Order order){
+       return orderRepository.saveOrder(order.getDate(),
+               order.getCost(),
+               order.getDescription(),
+               order.getUser_id(),
+               order.getStatus().toString());
+    }
+
+    public Order saveOrder(Order order){
+        return orderRepository.save(order);
+    }
 
 }

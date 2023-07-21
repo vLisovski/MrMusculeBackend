@@ -42,5 +42,16 @@ public class OrderController {
 
     //TODO deleteOrder
 
+    @DeleteMapping("deleteOrder")
+    @Transactional
+    public void deleteOrder(@RequestBody Order order) {
+        int orderId;
+        orderId = orderService.deleteOrder(order);
+        List<OrdersProducts> ordersProductsList;
+        //добавление в лист для дальнейщего удаления
+        //удаление нахуй
+        ordersProductsList.forEach((ordersProducts -> ordersProductsService.deleteOrderProductPair(ordersProducts)));
+    }
+
 
 }

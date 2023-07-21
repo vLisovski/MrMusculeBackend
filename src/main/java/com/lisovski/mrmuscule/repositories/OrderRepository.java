@@ -20,4 +20,12 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
                   @Param(value = "user_id") int user_id,
                   @Param(value = "status") String status
     );
+
+    @Query(value = "Я В ДУШЕ НЕ ЕБУ КАК НАПИСАТЬ ЭТОТ ЕБУЧИЙ ЗАПРОС НА УДАЛЕНИЕ", nativeQuery = true)
+    int deleteOrder(@Param(value = "date") Date date,
+                    @Param(value = "cost") int cost,
+                    @Param(value = "description") String description,
+                    @Param(value = "user_id") int user_id,
+                    @Param(value = "status") String status
+    );
 }

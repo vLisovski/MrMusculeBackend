@@ -23,4 +23,12 @@ public class OrderService {
                order.getUser_id(),
                order.getStatus().toString());
     }
+
+    public int deleteOrder(Order order) {
+        return orderRepository.deleteOrder(order.getDate(),
+                order.getCost(),
+                order.getDescription(),
+                order.getUser_id(),
+                order.getStatus().toString());
+    }
 }

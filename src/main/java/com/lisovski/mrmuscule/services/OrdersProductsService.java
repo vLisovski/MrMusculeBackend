@@ -14,4 +14,8 @@ public class OrdersProductsService {
     public void addOrderProductPair(OrdersProducts ordersProducts){
         ordersProductsRepository.save(ordersProducts);
     }
+
+    public void deleteOrderProductPair(OrdersProducts ordersProducts) {
+        ordersProductsRepository.delete(ordersProducts);
+    }
 }

@@ -23,4 +23,8 @@ public class OrderService {
                order.getUser_id(),
                order.getStatus().toString());
     }
+
+    public void deleteOrderByUserId(int userId){
+        orderRepository.deleteByUser_id(userId);
+    }
 }

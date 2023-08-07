@@ -36,11 +36,20 @@ public class OrderController {
                         .orderId(orderId)
                         .productId(product.getId()).build())
                 .collect(Collectors.toList());
-        //операция добавления продуктов, входящих в заказ, в таблицу orders_products
-        ordersProductsList.forEach((ordersProducts -> ordersProductsService.addOrderProductPair(ordersProducts)));
+        ordersProductsService.saveAll(ordersProductsList);
     }
 
-    //TODO deleteOrder
+    @DeleteMapping("deleteOrder")
+    @Transactional
+    public void deleteOrder(Order order){
+        List<OrdersProducts> ordersProductsList = order.getProductList().stream()
+                .map((product)-> OrdersProducts.builder()
+                        .orderId(order.getId())
+                        .productId(product.getId()).build())
+                .collect(Collectors.toList());
+        orderService.deleteOrderByUserId(order.getUser_id());
+        ordersProductsService.deleteAll(ordersProductsList);
+    }
 
 
 }

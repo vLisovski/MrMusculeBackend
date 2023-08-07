@@ -20,4 +20,8 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
                   @Param(value = "user_id") int user_id,
                   @Param(value = "status") String status
     );
+
+    void deleteByUser_id(int userId);
+
+
 }

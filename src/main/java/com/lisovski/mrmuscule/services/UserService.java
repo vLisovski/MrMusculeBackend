@@ -2,7 +2,6 @@ package com.lisovski.mrmuscule.services;
 
 import com.lisovski.mrmuscule.dtos.FavoriteProductsResponseDto;
 import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
-import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.models.User;
 import com.lisovski.mrmuscule.models.UserFavorite;
 import com.lisovski.mrmuscule.models.UserPurchases;
@@ -12,8 +11,6 @@ import com.lisovski.mrmuscule.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,17 +23,23 @@ public class UserService {
 
     public User getById(int userId){
         Optional<User> userOptional = userRepository.findById(userId);
-        return userOptional.isPresent() ? userOptional.get() : User.builder().id(-1).build();
+        return userOptional.orElseGet(() -> User.builder().id(-1).build());
     }
 
     public FavoriteProductsResponseDto getFavoritesByUserId(int userId){
-        UserFavorite userFavorite  = userFavoriteRepository.findById(userId).get();
-        return modelMapper.map(userFavorite, FavoriteProductsResponseDto.class);
+        Optional<UserFavorite> userFavoriteOptional  = userFavoriteRepository.findById(userId);
+
+        return userFavoriteOptional.isPresent()
+                ? modelMapper.map(userFavoriteOptional.get(), FavoriteProductsResponseDto.class)
+                : modelMapper.map(UserFavorite.builder().id(-1).build(), FavoriteProductsResponseDto.class);
     }
 
     public PurchasedProductsResponseDto getPurchasesByUserId(int userId){
-        UserPurchases userPurchases = userPurchasesRepository.findById(userId).get();
-        return modelMapper.map(userPurchases, PurchasedProductsResponseDto.class);
+        Optional<UserPurchases> userPurchasesOptional = userPurchasesRepository.findById(userId);
+
+        return userPurchasesOptional.isPresent()
+                ? modelMapper.map(userPurchasesOptional.get(), PurchasedProductsResponseDto.class)
+                : modelMapper.map(UserPurchases.builder().id(-1).build(), PurchasedProductsResponseDto.class);
     }
 
     public int deleteFavorite(int productId, int userId){

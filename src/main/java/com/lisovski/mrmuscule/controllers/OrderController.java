@@ -5,6 +5,10 @@ import com.lisovski.mrmuscule.models.Order;
 import com.lisovski.mrmuscule.models.OrdersProducts;
 import com.lisovski.mrmuscule.services.OrderService;
 import com.lisovski.mrmuscule.services.OrdersProductsService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +26,13 @@ public class OrderController {
     private OrdersProductsService ordersProductsService;
 
     @GetMapping("getAll")
-    public List<Order> getOrdersByUserId(@RequestParam int userId) {
+    public List<Order> getOrdersByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId) {
         return orderService.getAllByUserId(userId);
     }
 
     @PostMapping("addOrder")
     @Transactional
-    public void addNewOrder(@RequestBody Order order){
+    public void addNewOrder(@Valid @RequestBody Order order){
         int orderId;
         //операция сохранения заказа в таблицу orders
         //присвоение серверного времени заказу
@@ -48,7 +52,7 @@ public class OrderController {
 
     @DeleteMapping("deleteOrder")
     @Transactional
-    public void deleteOrder(@RequestBody Order order){
+    public void deleteOrder(@Valid @RequestBody Order order){
         List<OrdersProducts> ordersProductsList = order.getProductList().stream()
                 .map((product)-> OrdersProducts.builder()
                         .orderId(order.getId())

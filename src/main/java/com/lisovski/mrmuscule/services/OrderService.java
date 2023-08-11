@@ -12,8 +12,8 @@ public class OrderService {
 
     private OrderRepository orderRepository;
 
-    public List<Order> getOrders(){
-        return orderRepository.findAll();
+    public List<Order> getAllByUserId(int userId){
+        return orderRepository.findAllByUser_id(userId);
     }
 
     public int addOrder(Order order){

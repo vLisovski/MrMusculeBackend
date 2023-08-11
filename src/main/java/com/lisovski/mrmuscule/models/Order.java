@@ -1,10 +1,9 @@
 package com.lisovski.mrmuscule.models;
 
 import com.lisovski.mrmuscule.enums.OrderStatus;
-import com.lisovski.mrmuscule.enums.ProductType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,18 +25,28 @@ public class Order {
     private Date date;
 
     @Column(name="cost")
+    @NotNull
+    @Min(0)
+    @Max(2147483647)
     private int cost;
 
+    @Pattern(regexp = ".{0,512}")
     @Column(name="description")
     private String description;
 
+    @NotNull
+    @Min(0)
+    @Max(2147483647)
     @Column(name="user_id")
     private int user_id;
 
+    @NotNull
+    @NotBlank
     @Column(name="status")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @NotEmpty
     @ManyToMany
     @JoinTable(
             name="orders_products",

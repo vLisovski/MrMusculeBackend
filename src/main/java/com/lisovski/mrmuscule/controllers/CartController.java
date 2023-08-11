@@ -15,8 +15,8 @@ public class CartController {
 
     private CartService cartService;
 
-    @GetMapping("getCart/{userId}")
-    public List<Product> getCart(@PathVariable(name="userId")int userId) {
+    @GetMapping("getCart")
+    public List<Product> getCart(@RequestParam int userId) {
         return cartService.getAllProductsFromCartByUserId(userId);
     }
 
@@ -30,8 +30,8 @@ public class CartController {
         cartService.deleteProduct(cart);
     }
 
-    @DeleteMapping("clearCart/{userId}")
-    public void clearCart(@PathVariable(name="userId")int userId){
+    @DeleteMapping("clearCart")
+    public void clearCart(@RequestParam int userId){
         cartService.clearCart(userId);
     }
 }

@@ -15,21 +15,21 @@ public class ProductController {
 
     private ProductService productService;
 
-    @GetMapping("getAll/inventory/{limit}/{offset}")
-    public List<Product> getInventoryProducts(@PathVariable(name = "limit") int limit,
-                                     @PathVariable(name = "offset") int offset) {
+    @GetMapping("getAll/inventory")
+    public List<Product> getInventoryProducts(@RequestParam int limit,
+                                     @RequestParam int offset) {
         return productService.getProductsByCategory(ProductType.inventory,limit,offset);
     }
 
-    @GetMapping("getAll/food/{limit}/{offset}")
-    public List<Product> getFoodProducts(@PathVariable(name = "limit") int limit,
-                                     @PathVariable(name = "offset") int offset) {
+    @GetMapping("getAll/food")
+    public List<Product> getFoodProducts(@RequestParam int limit,
+                                     @RequestParam int offset) {
         return productService.getProductsByCategory(ProductType.food,limit,offset);
     }
 
-    @GetMapping("getAll/clothes/{limit}/{offset}")
-    public List<Product> getClothesProducts(@PathVariable(name = "limit") int limit,
-                                         @PathVariable(name = "offset") int offset) {
+    @GetMapping("getAll/clothes")
+    public List<Product> getClothesProducts(@RequestParam int limit,
+                                         @RequestParam int offset) {
         return productService.getProductsByCategory(ProductType.clothes,limit,offset);
     }
 

@@ -18,18 +18,6 @@ public class UserFavorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="phone_number")
-    private String phoneNumber;
-
-    @Column(name="email")
-    private String email;
-
-    @Column(name="name")
-    private String name;
-
-    @Column(name="bonuses")
-    private int bonuses;
-
     @ManyToMany
     @JoinTable(
             name="favorite",

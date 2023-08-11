@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
 
@@ -16,4 +18,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "INSERT INTO favorite (user_id, product_id) VALUES (:user_id,:product_id) RETURNING *",nativeQuery = true)
     int postFavorite(@Param(value = "product_id") int productId,
                       @Param(value = "user_id") int userId);
+
+    Optional<User> findByEmail(String email);
 }

@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,8 @@ public class UserService {
     private ModelMapper modelMapper;
 
     public User getById(int userId){
-        return userRepository.findById(userId).get();
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional.isPresent() ? userOptional.get() : User.builder().id(-1).build();
     }
 
     public FavoriteProductsResponseDto getFavoritesByUserId(int userId){

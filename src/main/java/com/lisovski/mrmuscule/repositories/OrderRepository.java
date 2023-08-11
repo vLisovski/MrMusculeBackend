@@ -23,5 +23,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
 
     void deleteByUser_id(int userId);
 
+    List<Order> findAllByUser_id(int user_id);
+
 
 }

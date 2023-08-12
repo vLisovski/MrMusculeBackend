@@ -60,7 +60,7 @@ public class OrderController {
                         .orderId(order.getId())
                         .productId(product.getId()).build())
                 .collect(Collectors.toList());
-        orderService.deleteOrderByUserId(order.getUser_id());
+        orderService.deleteOrderByUserId(order.getUserId());
         ordersProductsService.deleteAll(ordersProductsList);
     }
 

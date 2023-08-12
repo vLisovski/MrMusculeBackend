@@ -38,7 +38,7 @@ public class Order {
     @Min(0)
     @Max(2147483647)
     @Column(name="user_id")
-    private int user_id;
+    private int userId;
 
     @NotNull
     @NotBlank

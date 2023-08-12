@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("user")
 @AllArgsConstructor
@@ -22,6 +24,11 @@ public class UserController {
     @GetMapping("getById")
     public User getById(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         return userService.getById(userId);
+    }
+
+    @GetMapping("getIdByToken")
+    public int getIdByToken(Principal principal){
+        return  userService.findByEmail(principal.getName()).get().getId();
     }
 
     @GetMapping("getFavorites")

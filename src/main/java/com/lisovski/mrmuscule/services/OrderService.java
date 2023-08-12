@@ -13,18 +13,18 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     public List<Order> getAllByUserId(int userId){
-        return orderRepository.findAllByUser_id(userId);
+        return orderRepository.findAllByUserId(userId);
     }
 
     public int addOrder(Order order){
        return orderRepository.saveOrder(order.getDate(),
                order.getCost(),
                order.getDescription(),
-               order.getUser_id(),
+               order.getUserId(),
                order.getStatus().toString());
     }
 
     public void deleteOrderByUserId(int userId){
-        orderRepository.deleteByUser_id(userId);
+        orderRepository.deleteByUserId(userId);
     }
 }

@@ -21,9 +21,11 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
                   @Param(value = "status") String status
     );
 
-    void deleteByUser_id(int userId);
+    @Query(value = "DELETE FROM orders WHERE user_id=:user_id", nativeQuery = true)
+    void deleteByUserId(@Param(value = "user_id") int userId);
 
-    List<Order> findAllByUser_id(int user_id);
+    @Query(value = "SELECT * FROM orders WHERE user_id=:user_id", nativeQuery = true)
+    List<Order> findAllByUserId(@Param(value = "user_id") int user_id);
 
 
 }

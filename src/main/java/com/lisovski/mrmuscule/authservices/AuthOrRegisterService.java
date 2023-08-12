@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class AuthOrRegisterService {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final JWTService jwtService;
 
     private final PasswordEncoder passwordEncoder;
@@ -29,7 +29,7 @@ public class AuthOrRegisterService {
                 .phoneNumber("")
                 .build();
 
-        repository.save(user);
+        userRepository.save(user);
 
         String jwtToken = jwtService.generateToken(user);
 
@@ -46,7 +46,7 @@ public class AuthOrRegisterService {
                 )
         );
 
-        User user = repository.findByEmail(authRequestDto.getEmail())
+        User user = userRepository.findByEmail(authRequestDto.getEmail())
                 .orElseThrow();
 
         String jwtToken = jwtService.generateToken(user);
@@ -54,5 +54,9 @@ public class AuthOrRegisterService {
         return AuthOrRegisterResponseDto.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    public boolean checkEmail(String email){
+        return userRepository.existsByEmail(email);
     }
 }

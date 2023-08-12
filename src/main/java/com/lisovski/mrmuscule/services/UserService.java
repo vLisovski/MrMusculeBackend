@@ -26,6 +26,10 @@ public class UserService {
         return userOptional.orElseGet(() -> User.builder().id(-1).build());
     }
 
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public FavoriteProductsResponseDto getFavoritesByUserId(int userId){
         Optional<UserFavorite> userFavoriteOptional  = userFavoriteRepository.findById(userId);
 

@@ -21,20 +21,20 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("getAll/inventory")
-    public List<Product> getInventoryProducts(@Min(1) @Max(10) @RequestParam @NotNull int limit,
-                                              @Min(0) @Max(2147483646) @RequestParam @NotNull int offset) {
+    public List<Product> getInventoryProducts(@Min(1) @Max(16) @RequestParam @NotNull int limit,
+                                              @Min(0) @Max(2147483630) @RequestParam @NotNull int offset) {
         return productService.getProductsByCategory(ProductType.inventory,limit,offset);
     }
 
     @GetMapping("getAll/food")
-    public List<Product> getFoodProducts(@Min(1) @Max(10) @NotNull @RequestParam int limit,
-                                         @Min(0) @Max(2147483646) @RequestParam @NotNull int offset) {
+    public List<Product> getFoodProducts(@Min(1) @Max(16) @NotNull @RequestParam int limit,
+                                         @Min(0) @Max(2147483630) @RequestParam @NotNull int offset) {
         return productService.getProductsByCategory(ProductType.food,limit,offset);
     }
 
     @GetMapping("getAll/clothes")
-    public List<Product> getClothesProducts(@Min(1) @Max(10) @NotNull @RequestParam int limit,
-                                            @Min(0) @Max(2147483646) @NotNull @RequestParam int offset) {
+    public List<Product> getClothesProducts(@Min(1) @Max(16) @NotNull @RequestParam int limit,
+                                            @Min(0) @Max(2147483630) @NotNull @RequestParam int offset) {
         return productService.getProductsByCategory(ProductType.clothes,limit,offset);
     }
 }

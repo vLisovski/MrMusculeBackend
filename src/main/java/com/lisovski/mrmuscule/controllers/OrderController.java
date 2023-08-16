@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("orders")
+@RequestMapping("order")
 @AllArgsConstructor
 @Validated
 public class OrderController {

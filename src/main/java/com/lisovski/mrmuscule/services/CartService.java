@@ -16,8 +16,8 @@ public class CartService {
      private CartRepository cartRepository;
      private ProductRepository productRepository;
 
-     public List<Product> getAllProductsFromCartByUserId(int userId){
-        return productRepository.getProductsFromCartByUserId(userId);
+     public List<Product> getAllProductsFromCartByUserId(int userId, int limit, int offset){
+        return productRepository.getProductsFromCartByUserId(userId, limit, offset);
      }
 
      public void deleteProduct(Cart cart){

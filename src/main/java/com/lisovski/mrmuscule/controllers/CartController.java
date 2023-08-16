@@ -21,9 +21,11 @@ public class CartController {
 
     private CartService cartService;
 
-    @GetMapping("getCart")
-    public List<Product> getCart(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId) {
-        return cartService.getAllProductsFromCartByUserId(userId);
+    @GetMapping("getByUserId")
+    public List<Product> getCart(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
+                                 @Min(0) @Max(2147483631) @NotNull @RequestParam int limit,
+                                 @Min(0) @Max(2147483631) @NotNull @RequestParam int offset) {
+        return cartService.getAllProductsFromCartByUserId(userId, limit, offset);
     }
 
     @PostMapping("addProduct")

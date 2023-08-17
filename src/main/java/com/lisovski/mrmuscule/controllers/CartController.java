@@ -28,17 +28,17 @@ public class CartController {
         return cartService.getAllProductsFromCartByUserId(userId, limit, offset);
     }
 
-    @PostMapping("addProduct")
+    @PostMapping("free/addProduct")
     public void addProduct(@Valid @RequestBody Cart cart){
         cartService.addProduct(cart);
     }
 
-    @DeleteMapping("deleteProduct")
+    @DeleteMapping("free/deleteProduct")
     public void deleteProduct(@Valid @RequestBody Cart cart){
         cartService.deleteProduct(cart);
     }
 
-    @DeleteMapping("clearCart")
+    @DeleteMapping("free/clearCart")
     public void clearCart(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         cartService.clearCart(userId);
     }

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer> {
 
-    @Query(value="SELECT * FROM products WHERE type = cast(:type as product_type) LIMIT :limit OFFSET :offset",nativeQuery = true)
+    @Query(value="SELECT * FROM products WHERE type = cast(:type as product_type) ORDER BY id LIMIT :limit OFFSET :offset",nativeQuery = true)
     List<Product> getProductsByCategory(@Param(value = "type") String productType,
                                         @Param(value = "limit") int limit,
                                         @Param(value = "offset") int offset);

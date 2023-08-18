@@ -37,4 +37,19 @@ public class ProductController {
                                             @Min(0) @Max(2147483630) @NotNull @RequestParam int offset) {
         return productService.getProductsByCategory(ProductType.clothes,limit,offset);
     }
+
+    @GetMapping("getTotal/inventory")
+    public int getTotalInventory(){
+        return productService.getTotalInventory();
+    }
+
+    @GetMapping("getTotal/clothes")
+    public int getTotalClothes(){
+        return productService.getTotalClothes();
+    }
+
+    @GetMapping("getTotal/food")
+    public int getTotalFood(){
+        return productService.getTotalFood();
+    }
 }

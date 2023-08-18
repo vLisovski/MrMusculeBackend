@@ -20,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     List<Product> getProductsFromCartByUserId(@Param(value = "user_id") int userId,
                                               @Param(value = "limit") int limit,
                                               @Param(value = "offset") int offset);
+    @Query(value = "SELECT COUNT(*) FROM products WHERE type = cast(:type as product_type)", nativeQuery = true)
+    int getTotalByProductType(@Param(value = "type") String productType);
 }

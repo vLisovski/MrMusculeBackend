@@ -17,4 +17,16 @@ public class ProductService {
     public List<Product> getProductsByCategory(ProductType productType, int limit, int offset){
         return productRepository.getProductsByCategory(productType.toString(), limit, offset);
     }
+
+    public int getTotalInventory(){
+        return productRepository.getTotalByProductType(ProductType.inventory.toString());
+    }
+
+    public int getTotalFood(){
+        return productRepository.getTotalByProductType(ProductType.food.toString());
+    }
+
+    public int getTotalClothes(){
+        return productRepository.getTotalByProductType(ProductType.clothes.toString());
+    }
 }

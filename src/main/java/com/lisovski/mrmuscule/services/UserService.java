@@ -2,10 +2,7 @@ package com.lisovski.mrmuscule.services;
 
 import com.lisovski.mrmuscule.dtos.FavoriteProductsResponseDto;
 import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
-import com.lisovski.mrmuscule.models.Favorite;
-import com.lisovski.mrmuscule.models.User;
-import com.lisovski.mrmuscule.models.UserFavorite;
-import com.lisovski.mrmuscule.models.UserPurchases;
+import com.lisovski.mrmuscule.models.*;
 import com.lisovski.mrmuscule.repositories.UserFavoriteRepository;
 import com.lisovski.mrmuscule.repositories.UserPurchasesRepository;
 import com.lisovski.mrmuscule.repositories.UserRepository;
@@ -13,8 +10,10 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -33,12 +32,15 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public FavoriteProductsResponseDto getFavoritesByUserId(int userId, int limit, int offset){
-        Optional<UserFavorite> userFavoriteOptional  = userFavoriteRepository.getFavorites(userId,limit,offset);
+    public List<Integer> getFavoritesByUserId(int userId, int limit, int offset){
+        List<Favorite> favoriteList = userFavoriteRepository.getFavorites(userId,limit,offset);
 
-        return userFavoriteOptional.isPresent()
-                ? modelMapper.map(userFavoriteOptional.get(), FavoriteProductsResponseDto.class)
-                : modelMapper.map(UserFavorite.builder().id(-1).build(), FavoriteProductsResponseDto.class);
+        List<Integer> favoriteIds = new ArrayList<>();
+        if(!favoriteList.isEmpty()){
+            favoriteIds = favoriteList.stream().map(Favorite::getProductId).collect(Collectors.toList());
+        }
+
+        return favoriteIds;
     }
 
     public PurchasedProductsResponseDto getPurchasesByUserId(int userId,int limit, int offset){

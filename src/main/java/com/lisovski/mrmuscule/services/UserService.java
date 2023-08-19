@@ -1,6 +1,6 @@
 package com.lisovski.mrmuscule.services;
 
-import com.lisovski.mrmuscule.dtos.FavoriteProductsResponseDto;
+import com.lisovski.mrmuscule.dtos.FavoriteProductsRequestDto;
 import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
 import com.lisovski.mrmuscule.models.*;
 import com.lisovski.mrmuscule.repositories.UserFavoriteRepository;
@@ -32,7 +32,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public List<Integer> getFavoritesByUserId(int userId, int limit, int offset){
+    public List<Integer> getFavoritesIdsByUserId(int userId, int limit, int offset){
         List<Favorite> favoriteList = userFavoriteRepository.getFavorites(userId,limit,offset);
 
         List<Integer> favoriteIds = new ArrayList<>();
@@ -43,6 +43,10 @@ public class UserService {
         return favoriteIds;
     }
 
+    public int getTotalFavoritesByUserId(int userId){
+       return userFavoriteRepository.getTotalByUserId(userId);
+    }
+
     public PurchasedProductsResponseDto getPurchasesByUserId(int userId,int limit, int offset){
         Optional<UserPurchases> userPurchasesOptional = userPurchasesRepository.getPurchases(userId,limit,offset);
 
@@ -51,13 +55,14 @@ public class UserService {
                 : modelMapper.map(UserPurchases.builder().id(-1).build(), PurchasedProductsResponseDto.class);
     }
 
-    public int deleteFavorite(Favorite favorite){
-        return userRepository.deleteFavorite(favorite.getProductId(),favorite.getUserId());
+    public int deleteFavorite(FavoriteProductsRequestDto favoriteProductsRequestDto){
+        return userRepository.deleteFavorite(favoriteProductsRequestDto.getProductId(),favoriteProductsRequestDto.getUserId());
     }
 
-    public int addFavorite(Favorite favorite){
+    public int addFavorite(FavoriteProductsRequestDto favoriteProductsRequestDto){
         try{
-            return userRepository.postFavorite(favorite.getProductId(),favorite.getUserId());
+            return userRepository.postFavorite(favoriteProductsRequestDto.getProductId(),
+                    favoriteProductsRequestDto.getUserId());
         }catch (Exception e){
             System.out.println("duplicate key value violates unique constraint \"favorite_product_id_user_id_uindex\"");
             return 0;

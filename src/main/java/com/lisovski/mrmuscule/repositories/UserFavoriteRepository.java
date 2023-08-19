@@ -1,6 +1,7 @@
 package com.lisovski.mrmuscule.repositories;
 
 import com.lisovski.mrmuscule.models.Favorite;
+import com.lisovski.mrmuscule.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +13,9 @@ public interface UserFavoriteRepository extends JpaRepository<Favorite, Integer>
     List<Favorite> getFavorites(@Param(value = "user_id") int userId,
                                     @Param(value = "limit") int limit,
                                     @Param(value = "offset") int offset);
+
+    @Query(value = "SELECT COUNT(*) FROM favorite WHERE user_id=:user_id", nativeQuery = true)
+    int getTotalByUserId(@Param(value = "user_id") int userId);
+
+
 }

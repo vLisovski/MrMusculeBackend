@@ -1,32 +1,25 @@
-package com.lisovski.mrmuscule.models;
+package com.lisovski.mrmuscule.dtos;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "favorite")
-public class Favorite {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-
+public class FavoriteProductsRequestDto {
     @NotNull
     @Min(1)
     @Max(2147483647)
-    @Column(name = "user_id")
-    int userId;
-
-    @NotNull
-    @Min(1)
-    @Max(2147483647)
-    @Column(name = "product_id")
     int productId;
+
+    @NotNull
+    @Min(1)
+    @Max(2147483647)
+    int userId;
 }

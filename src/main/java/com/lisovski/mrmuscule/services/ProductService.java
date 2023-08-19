@@ -18,6 +18,10 @@ public class ProductService {
         return productRepository.getProductsByCategory(productType.toString(), limit, offset);
     }
 
+    public List<Product> getFavoritesByUserId(int userId, int limit, int offset){
+        return productRepository.getFavoritesProducts(userId,limit,offset);
+    }
+
     public int getTotalInventory(){
         return productRepository.getTotalByProductType(ProductType.inventory.toString());
     }

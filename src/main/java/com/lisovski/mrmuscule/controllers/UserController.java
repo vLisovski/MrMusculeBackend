@@ -1,9 +1,12 @@
 package com.lisovski.mrmuscule.controllers;
 
+import com.lisovski.mrmuscule.dtos.FavoriteProductsRequestDto;
 import com.lisovski.mrmuscule.dtos.FavoriteProductsResponseDto;
 import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
 import com.lisovski.mrmuscule.models.Favorite;
+import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.models.User;
+import com.lisovski.mrmuscule.services.ProductService;
 import com.lisovski.mrmuscule.services.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -23,6 +26,7 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private ProductService productService;
 
     @GetMapping("getById")
     public User getById(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
@@ -34,11 +38,24 @@ public class UserController {
         return  userService.findByEmail(principal.getName()).get().getId();
     }
 
-    @GetMapping("getFavorites")
-    public List<Integer> getFavoritesById(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
+    @GetMapping("getFavoritesIds")
+    public List<Integer> getFavoritesIdsByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
                                           @Min(1) @Max(16) @NotNull @RequestParam int limit,
                                           @Min(0) @Max(2147483631) @NotNull @RequestParam int offset){
-        return userService.getFavoritesByUserId(userId, limit, offset);
+        return userService.getFavoritesIdsByUserId(userId, limit, offset);
+    }
+
+    @GetMapping("getFavorites")
+    public List<Product> getFavoritesByIdUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
+                                                @Min(1) @Max(16) @NotNull @RequestParam int limit,
+                                                @Min(0) @Max(2147483631) @NotNull @RequestParam int offset){
+        return productService.getFavoritesByUserId(userId, limit, offset);
+    }
+
+    @GetMapping("getTotalFavorite")
+    public int getTotalByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+        System.out.println(userService.getTotalFavoritesByUserId(userId));
+       return userService.getTotalFavoritesByUserId(userId);
     }
 
     @GetMapping("getPurchases")
@@ -49,12 +66,12 @@ public class UserController {
     }
 
     @PostMapping("addFavorite")
-    public int addFavorite(@Valid @RequestBody Favorite favorite){
-       return userService.addFavorite(favorite);
+    public int addFavorite(@Valid @RequestBody FavoriteProductsRequestDto favoriteProductsRequestDto){
+       return userService.addFavorite(favoriteProductsRequestDto);
     }
 
     @DeleteMapping("deleteFavorite")
-    public int deleteFavorite(@Valid @RequestBody Favorite favorite){
-       return userService.deleteFavorite(favorite);
+    public int deleteFavorite(@Valid @RequestBody FavoriteProductsRequestDto favoriteProductsRequestDto){
+       return userService.deleteFavorite(favoriteProductsRequestDto);
     }
 }

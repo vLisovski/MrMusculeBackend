@@ -22,4 +22,20 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     Optional<User> findByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    @Query(value = "UPDATE users SET name=:name WHERE id=:userId",nativeQuery = true)
+    int UpdateNameNyUserId(@Param(value = "userId") int userId,
+                           @Param(value = "name") String phoneNumber);
+
+    @Query(value = "UPDATE users SET phone_number=:phoneNumber WHERE id=:userId",nativeQuery = true)
+    int UpdatePhoneNumberByUserId(@Param(value = "userId") int userId,
+                                  @Param(value = "phoneNumber") String phoneNumber);
+
+    @Query(value = "UPDATE users SET email=:email WHERE id=:userId",nativeQuery = true)
+    int UpdateEmailByUserId(@Param(value = "userId") int userId,
+                            @Param(value = "email") String email);
+
+    @Query(value = "UPDATE users SET avatar_path=:avatarPath WHERE id=:userId",nativeQuery = true)
+    int UpdateAvatarPathByUserId(@Param(value = "userId") int userId,
+                                 @Param(value = "avatarPath") String phoneNumber);
 }

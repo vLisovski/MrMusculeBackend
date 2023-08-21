@@ -40,6 +40,9 @@ public class User implements UserDetails {
     @Column(name="name")
     private String name;
 
+    @Column(name="avatar_path")
+    private String avatarPath;
+
     @Min(0)
     @Max(2147483647)
     @Column(name="bonuses")

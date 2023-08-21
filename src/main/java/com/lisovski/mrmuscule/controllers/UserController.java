@@ -3,6 +3,7 @@ package com.lisovski.mrmuscule.controllers;
 import com.lisovski.mrmuscule.dtos.FavoriteProductsRequestDto;
 import com.lisovski.mrmuscule.dtos.FavoriteProductsResponseDto;
 import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
+import com.lisovski.mrmuscule.dtos.UserResponseDto;
 import com.lisovski.mrmuscule.models.Favorite;
 import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.models.User;
@@ -29,8 +30,32 @@ public class UserController {
     private ProductService productService;
 
     @GetMapping("getById")
-    public User getById(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+    public UserResponseDto getById(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         return userService.getById(userId);
+    }
+
+    @GetMapping("updateEmail")
+    public int updateEmail(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
+                           @NotNull @RequestParam String email){
+        return userService.UpdateEmailByUserId(userId, email);
+    }
+
+    @GetMapping("updateName")
+    public int updateName(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
+                           @NotNull @RequestParam String name){
+        return userService.UpdateNameNyUserId(userId, name);
+    }
+
+    @GetMapping("updatePhoneNumber")
+    public int updatePhoneNumber(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
+                           @NotNull @RequestParam String phoneNumber){
+        return userService.UpdatePhoneNumberByUserId(userId, phoneNumber);
+    }
+
+    @GetMapping("updatePhotoPath")
+    public int updateAvatarPath(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
+                           @NotNull @RequestParam String avatarPath){
+        return userService.UpdateAvatarPathByUserId(userId, avatarPath);
     }
 
     @GetMapping("getIdByToken")

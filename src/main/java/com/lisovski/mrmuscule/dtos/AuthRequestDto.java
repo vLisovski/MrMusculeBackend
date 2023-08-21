@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class AuthRequestDto {
     @Email
     private String email;
-    @Pattern(regexp = ".{0,16}")
+    @Pattern(regexp = ".{16}")
     private String password;
 }

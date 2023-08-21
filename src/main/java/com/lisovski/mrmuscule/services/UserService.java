@@ -2,6 +2,7 @@ package com.lisovski.mrmuscule.services;
 
 import com.lisovski.mrmuscule.dtos.FavoriteProductsRequestDto;
 import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
+import com.lisovski.mrmuscule.dtos.UserResponseDto;
 import com.lisovski.mrmuscule.models.*;
 import com.lisovski.mrmuscule.repositories.UserFavoriteRepository;
 import com.lisovski.mrmuscule.repositories.UserPurchasesRepository;
@@ -23,9 +24,33 @@ public class UserService {
     private UserPurchasesRepository userPurchasesRepository;
     private ModelMapper modelMapper;
 
-    public User getById(int userId){
+    public UserResponseDto getById(int userId){
+
         Optional<User> userOptional = userRepository.findById(userId);
-        return userOptional.orElseGet(() -> User.builder().id(-1).build());
+        UserResponseDto userResponseDto = new UserResponseDto();
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+
+            userResponseDto = modelMapper.map(user, UserResponseDto.class);
+        }
+
+        return userResponseDto;
+    }
+
+    public int UpdateNameNyUserId(int userId, String name){
+      return userRepository.UpdateNameNyUserId(userId, name);
+    }
+
+    public int UpdatePhoneNumberByUserId(int userId, String phoneNumber){
+        return userRepository.UpdatePhoneNumberByUserId(userId, phoneNumber);
+    }
+
+    public int UpdateEmailByUserId(int userId, String email){
+        return userRepository.UpdateEmailByUserId(userId, email);
+    }
+
+    public int UpdateAvatarPathByUserId(int userId, String avatarPath){
+        return userRepository.UpdateAvatarPathByUserId(userId, avatarPath);
     }
 
     public Optional<User> findByEmail(String email){

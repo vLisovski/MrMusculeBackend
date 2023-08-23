@@ -38,4 +38,10 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "UPDATE users SET avatar_path=:avatarPath WHERE id=:userId RETURNING 1",nativeQuery = true)
     int UpdateAvatarPathByUserId(@Param(value = "userId") int userId,
                                  @Param(value = "avatarPath") String phoneNumber);
+
+    @Query(value = "SELECT bonuses FROM users WHERE id=:userId",nativeQuery = true)
+    int getBonusBalanceByUserId(@Param(value = "userId") int userId);
+
+    @Query(value = "SELECT COUNT(*) FROM purchases WHERE user_id=:userId",nativeQuery = true)
+    int getTotalPurchasesByUserId(@Param(value = "userId") int userId);
 }

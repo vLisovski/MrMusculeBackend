@@ -34,6 +34,16 @@ public class UserController {
         return userService.getById(userId);
     }
 
+    @GetMapping("getTotalPurchases")
+    public int getTotalPurchasesByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+        return userService.getTotalPurchases(userId);
+    }
+
+    @GetMapping("getBonusBalance")
+    public int getBonusBalanceByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+        return userService.getBonusBalanceByUserId(userId);
+    }
+
     @GetMapping("updateEmail")
     public int updateEmail(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
                            @NotNull @RequestParam String email){

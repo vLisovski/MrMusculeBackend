@@ -4,6 +4,7 @@ import com.lisovski.mrmuscule.dtos.FavoriteProductsRequestDto;
 import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
 import com.lisovski.mrmuscule.dtos.UserResponseDto;
 import com.lisovski.mrmuscule.models.*;
+import com.lisovski.mrmuscule.repositories.ProductRepository;
 import com.lisovski.mrmuscule.repositories.UserFavoriteRepository;
 import com.lisovski.mrmuscule.repositories.UserPurchasesRepository;
 import com.lisovski.mrmuscule.repositories.UserRepository;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private UserRepository userRepository;
     private UserFavoriteRepository userFavoriteRepository;
-    private UserPurchasesRepository userPurchasesRepository;
+    private ProductRepository productRepository;
     private ModelMapper modelMapper;
 
     public UserResponseDto getById(int userId){
@@ -35,6 +36,14 @@ public class UserService {
         }
 
         return userResponseDto;
+    }
+
+    public int getBonusBalanceByUserId(int userId){
+        return userRepository.getBonusBalanceByUserId(userId);
+    }
+
+    public int getTotalPurchases(int userId){
+        return userRepository.getTotalPurchasesByUserId(userId);
     }
 
     public int UpdateNameNyUserId(int userId, String name){
@@ -73,11 +82,9 @@ public class UserService {
     }
 
     public PurchasedProductsResponseDto getPurchasesByUserId(int userId,int limit, int offset){
-        Optional<UserPurchases> userPurchasesOptional = userPurchasesRepository.getPurchases(userId,limit,offset);
+        List<Product> userPurchases = productRepository.getPurchases(userId,limit,offset);
 
-        return userPurchasesOptional.isPresent()
-                ? modelMapper.map(userPurchasesOptional.get(), PurchasedProductsResponseDto.class)
-                : modelMapper.map(UserPurchases.builder().id(-1).build(), PurchasedProductsResponseDto.class);
+        return PurchasedProductsResponseDto.builder().purchasesList(userPurchases).build();
     }
 
     public int deleteFavorite(FavoriteProductsRequestDto favoriteProductsRequestDto){

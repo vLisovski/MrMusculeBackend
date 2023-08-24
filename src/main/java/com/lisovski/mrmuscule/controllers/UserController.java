@@ -1,9 +1,6 @@
 package com.lisovski.mrmuscule.controllers;
 
-import com.lisovski.mrmuscule.dtos.FavoriteProductsRequestDto;
-import com.lisovski.mrmuscule.dtos.FavoriteProductsResponseDto;
-import com.lisovski.mrmuscule.dtos.PurchasedProductsResponseDto;
-import com.lisovski.mrmuscule.dtos.UserResponseDto;
+import com.lisovski.mrmuscule.dtos.*;
 import com.lisovski.mrmuscule.models.Favorite;
 import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.models.User;
@@ -89,7 +86,6 @@ public class UserController {
 
     @GetMapping("getTotalFavorite")
     public int getTotalByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
-        System.out.println(userService.getTotalFavoritesByUserId(userId));
        return userService.getTotalFavoritesByUserId(userId);
     }
 

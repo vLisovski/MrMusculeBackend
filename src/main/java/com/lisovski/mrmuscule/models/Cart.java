@@ -4,23 +4,27 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "cart")
+@Builder
+@NoArgsConstructor
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @NotNull
     @Min(0)
     @Max(2147483647)
     @Column(name = "user_id")
-    int userId;
+    private int userId;
 
     @NotNull
     @Min(0)
     @Max(2147483647)
     @Column(name = "product_id")
-    int productId;
+    private int productId;
 }

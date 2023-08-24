@@ -46,6 +46,8 @@ public class UserService {
         return userRepository.getTotalPurchasesByUserId(userId);
     }
 
+
+
     public int UpdateNameNyUserId(int userId, String name){
       return userRepository.UpdateNameNyUserId(userId, name);
     }

@@ -1,7 +1,7 @@
 package com.lisovski.mrmuscule.controllers;
 
-import com.lisovski.mrmuscule.models.Cart;
-import com.lisovski.mrmuscule.models.Product;
+import com.lisovski.mrmuscule.dtos.CartRequestDto;
+import com.lisovski.mrmuscule.dtos.CartResponseDto;
 import com.lisovski.mrmuscule.services.CartService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -11,8 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("cart")
 @AllArgsConstructor
@@ -21,24 +19,29 @@ public class CartController {
 
     private CartService cartService;
 
-    @GetMapping("getByUserId")
-    public List<Product> getCart(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
-                                 @Min(0) @Max(2147483631) @NotNull @RequestParam int limit,
-                                 @Min(0) @Max(2147483631) @NotNull @RequestParam int offset) {
-        return cartService.getAllProductsFromCartByUserId(userId, limit, offset);
+    @GetMapping("getCart")
+    public CartResponseDto getCartByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
+                                           @Min(1) @Max(16) @NotNull @RequestParam int limit,
+                                           @Min(0) @Max(2147483631) @NotNull @RequestParam int offset){
+        return cartService.getCartProducts(userId, limit, offset);
     }
 
-    @PostMapping("free/addProduct")
-    public void addProduct(@Valid @RequestBody Cart cart){
-        cartService.addProduct(cart);
+    @GetMapping("getTotal")
+    public int getTotalCartByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+        return cartService.getTotalCart(userId);
     }
 
-    @DeleteMapping("free/deleteProduct")
-    public void deleteProduct(@Valid @RequestBody Cart cart){
-        cartService.deleteProduct(cart);
+    @PostMapping("addProduct")
+    public void addProduct(@Valid @RequestBody CartRequestDto cartRequestDto){
+        cartService.addProduct(cartRequestDto);
     }
 
-    @DeleteMapping("free/clearCart")
+    @DeleteMapping("deleteProduct")
+    public void deleteProduct(@Valid @RequestBody CartRequestDto cartRequestDto){
+        cartService.deleteProduct(cartRequestDto);
+    }
+
+    @DeleteMapping("clearCart")
     public void clearCart(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         cartService.clearCart(userId);
     }

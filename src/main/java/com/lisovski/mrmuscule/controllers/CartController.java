@@ -2,6 +2,8 @@ package com.lisovski.mrmuscule.controllers;
 
 import com.lisovski.mrmuscule.dtos.CartRequestDto;
 import com.lisovski.mrmuscule.dtos.CartResponseDto;
+import com.lisovski.mrmuscule.dtos.AddCartRequestDto;
+import com.lisovski.mrmuscule.models.Cart;
 import com.lisovski.mrmuscule.services.CartService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -10,6 +12,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("cart")
@@ -32,8 +36,18 @@ public class CartController {
     }
 
     @PostMapping("addProduct")
-    public void addProduct(@Valid @RequestBody CartRequestDto cartRequestDto){
-        cartService.addProduct(cartRequestDto);
+    public int addProduct(@Valid @RequestBody CartRequestDto cartRequestDto){
+       return cartService.addProduct(cartRequestDto);
+    }
+
+    @GetMapping("getProductIds")
+    public List<Integer> getProductsIds(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+        return cartService.getCartProductsIds(userId);
+    }
+
+    @PostMapping("addCart")
+    public int addCart(@RequestBody AddCartRequestDto addCartRequestDto){
+        return cartService.addAllProducts(addCartRequestDto.getCarts());
     }
 
     @DeleteMapping("deleteProduct")

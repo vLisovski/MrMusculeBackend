@@ -33,4 +33,8 @@ public class ProductService {
     public int getTotalClothes(){
         return productRepository.getTotalByProductType(ProductType.clothes.toString());
     }
+
+    public List<Product> getProductsByIds(List<Integer> ids){
+        return productRepository.findAllById(ids);
+    }
 }

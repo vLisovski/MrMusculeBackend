@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -36,6 +38,37 @@ public class ProductController {
     public List<Product> getClothesProducts(@Min(1) @Max(16) @NotNull @RequestParam int limit,
                                             @Min(0) @Max(2147483630) @NotNull @RequestParam int offset) {
         return productService.getProductsByCategory(ProductType.clothes,limit,offset);
+    }
+
+    @PostMapping("getAllByIdList")
+    public List<Product> getClothesProduct(@RequestBody String json){
+
+        System.out.println("PRODUCTS IDS" + json);
+
+        String request1 = json.replace("{"," ");
+        String request2 = request1.replace("}"," ");
+        String request3 = request2.replace("\""," ");
+        String request4 = request3.replace("ids"," ");
+        String request5 = request4.replace(":"," ");
+        String request = request5.trim();
+
+        System.out.println(request);
+
+        String[] strings = request.split(",");
+
+        int[] ints = new int[strings.length];
+
+        for (int i = 0; i < strings.length; i++) {
+            ints[i] = Integer.parseInt(strings[i]);
+        }
+
+        List<Integer> integers = new ArrayList<>();
+
+        for (int i = 0; i < ints.length; i++) {
+            integers.add(ints[i]);
+        }
+
+        return productService.getProductsByIds(integers);
     }
 
     @GetMapping("getTotal/inventory")

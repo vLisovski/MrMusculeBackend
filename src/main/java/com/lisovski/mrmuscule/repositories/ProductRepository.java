@@ -34,8 +34,8 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
                                @Param(value = "limit") int limit,
                                @Param(value = "offset") int offset);
 
-    @Query(value="SELECT pd.id, pd.description, pd.photo_path, pd.price, pd.name, pd.type FROM products p JOIN cart c ON p.id = c.product_id AND c.user_id=:userId LIMIT :limit OFFSET :offset", nativeQuery = true)
-    List<Product> getCartProducts(@Param(value = "user_id") int userId,
+    @Query(value="SELECT p.id, p.description, p.photo_path, p.price, p.name, p.type FROM products p JOIN cart c ON p.id = c.product_id AND c.user_id=:userId LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<Product> getCartProducts(@Param(value = "userId") int userId,
                                   @Param(value = "limit") int limit,
                                   @Param(value = "offset") int offset);
 }

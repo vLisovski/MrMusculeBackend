@@ -6,13 +6,9 @@ import com.lisovski.mrmuscule.models.Cart;
 import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.repositories.CartRepository;
 import com.lisovski.mrmuscule.repositories.ProductRepository;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 
@@ -32,13 +28,27 @@ public class CartService {
         return cartRepository.getTotalCartByUserId(userId);
     }
 
+    public List<Integer> getCartProductsIds(int userId){
+        return cartRepository.getCartProductsIds(userId);
+    }
 
     public int deleteProduct(CartRequestDto cartRequestDto) {
         return cartRepository.deleteProductFromCart(cartRequestDto.getUserId(), cartRequestDto.getProductId());
     }
 
     public int addProduct(CartRequestDto cartRequestDto) {
-        return cartRepository.addProductToCart(cartRequestDto.getUserId(), cartRequestDto.getProductId());
+        int count = 0;
+        try{
+            count = cartRepository.addProductToCart(cartRequestDto.getUserId(), cartRequestDto.getProductId());
+        }catch (Exception e){
+            return count;
+        }
+        return count;
+    }
+
+    public int addAllProducts(List<Cart> cartList){
+        cartRepository.saveAll(cartList);
+        return 1;
     }
 
     public int clearCart(int userId) {

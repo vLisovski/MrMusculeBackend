@@ -19,8 +19,8 @@ public class CartService {
     private CartRepository cartRepository;
     private ProductRepository productRepository;
 
-    public CartResponseDto getCartProducts(int userId, int limit, int offset) {
-        List<Product> productList = productRepository.getCartProducts(userId, limit, offset);
+    public CartResponseDto getCartProducts(int userId) {
+        List<Product> productList = productRepository.getCartProducts(userId);
         return CartResponseDto.builder().cart(productList).build();
     }
 

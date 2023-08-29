@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @PostMapping("getAllByIdList")
-    public List<Product> getClothesProduct(@RequestBody String json){
+    public List<Product> getProductsByIds(@RequestBody String json){
 
         System.out.println("PRODUCTS IDS" + json);
 

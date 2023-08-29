@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,10 +25,8 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping("getCart")
-    public CartResponseDto getCartByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId,
-                                           @Min(1) @Max(16) @NotNull @RequestParam int limit,
-                                           @Min(0) @Max(2147483631) @NotNull @RequestParam int offset){
-        return cartService.getCartProducts(userId, limit, offset);
+    public CartResponseDto getCartByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+        return cartService.getCartProducts(userId);
     }
 
     @GetMapping("getTotal")
@@ -46,8 +45,37 @@ public class CartController {
     }
 
     @PostMapping("addCart")
-    public int addCart(@RequestBody AddCartRequestDto addCartRequestDto){
-        return cartService.addAllProducts(addCartRequestDto.getCarts());
+    public int addCart(@RequestBody String json){
+
+        System.out.println("json "+json);
+
+        String request1 = json.replace("{","");
+        String request2 = request1.replace("}","");
+        String request3 = request2.replace("\"","");
+        String request4 = request3.replace("carts","");
+        String request5 = request4.replace(":","");
+        String request6 = request5.replace("[","");
+        String request7 = request6.replace("]","");
+        String request8 = request7.replace("userId","");
+        String request = request8.trim();
+        System.out.println("request "+request);
+        String[] stringsIds = request.split(",");
+
+        List<Integer> jsonAfterParse = new ArrayList<>();
+
+        for (int i = 0; i < stringsIds.length; i++) {
+            jsonAfterParse.add(Integer.parseInt(stringsIds[i]));
+        }
+
+        List<Cart> cartList = new ArrayList<>();
+
+        for (int i = 1; i < jsonAfterParse.size(); i++) {
+            cartList.add(Cart.builder().userId(jsonAfterParse.get(0)).productId(jsonAfterParse.get(i)).build());
+        }
+
+        System.out.println("LIST "+jsonAfterParse);
+
+        return cartService.addAllProducts(cartList);
     }
 
     @DeleteMapping("deleteProduct")

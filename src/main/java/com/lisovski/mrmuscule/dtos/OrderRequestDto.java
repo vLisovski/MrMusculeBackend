@@ -4,9 +4,17 @@ import com.lisovski.mrmuscule.enums.OrderStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderRequestDto {
 
     @NotNull
@@ -21,6 +29,10 @@ public class OrderRequestDto {
     @Max(2147483647)
     private int bonusesToBuy;
 
+    @Min(0)
+    @Max(2147483647)
+    private int bonusBalance;
+
     @NotNull
     @Min(0)
     @Max(2147483647)
@@ -32,5 +44,5 @@ public class OrderRequestDto {
 
     @NotNull
     @NotBlank
-    private List<String> productIdsList;
+    private List<Integer> productIdsList;
 }

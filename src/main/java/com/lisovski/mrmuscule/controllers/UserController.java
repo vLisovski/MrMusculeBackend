@@ -5,6 +5,7 @@ import com.lisovski.mrmuscule.models.Favorite;
 import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.models.User;
 import com.lisovski.mrmuscule.services.ProductService;
+import com.lisovski.mrmuscule.services.PurchaseService;
 import com.lisovski.mrmuscule.services.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -26,6 +27,7 @@ public class UserController {
     private UserService userService;
     private ProductService productService;
 
+
     @GetMapping("getById")
     public UserResponseDto getById(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         return userService.getById(userId);
@@ -39,6 +41,12 @@ public class UserController {
     @GetMapping("getBonusBalance")
     public int getBonusBalanceByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         return userService.getBonusBalanceByUserId(userId);
+    }
+
+    @GetMapping("updateBonusBalance")
+    public int updateBonusBalanceByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int bonuses,
+                                          @Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+        return userService.updateBonusBalance(bonuses, userId);
     }
 
     @GetMapping("updateEmail")

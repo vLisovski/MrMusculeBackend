@@ -42,6 +42,10 @@ public class UserService {
         return userRepository.getBonusBalanceByUserId(userId);
     }
 
+    public int updateBonusBalance(int bonuses, int userId){
+        return  userRepository.updateBonusesByUserId(bonuses, userId);
+    }
+
     public int getTotalPurchases(int userId){
         return userRepository.getTotalPurchasesByUserId(userId);
     }

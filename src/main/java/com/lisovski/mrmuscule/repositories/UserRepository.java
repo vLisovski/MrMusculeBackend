@@ -44,4 +44,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     @Query(value = "SELECT COUNT(*) FROM purchases WHERE user_id=:userId",nativeQuery = true)
     int getTotalPurchasesByUserId(@Param(value = "userId") int userId);
+
+    @Query(value="UPDATE users SET bonuses=:bonuses WHERE id=:userId RETURNING 1", nativeQuery = true)
+    int updateBonusesByUserId(@Param(value = "bonuses") int bonuses,
+                              @Param(value = "userId") int userId);
 }

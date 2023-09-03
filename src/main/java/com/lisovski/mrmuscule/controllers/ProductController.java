@@ -1,5 +1,6 @@
 package com.lisovski.mrmuscule.controllers;
 
+import com.lisovski.mrmuscule.aspect.LogExecuteTimeAnnotation;
 import com.lisovski.mrmuscule.enums.ProductType;
 import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.services.ProductService;
@@ -11,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -23,24 +23,28 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("getAll/inventory")
+    @LogExecuteTimeAnnotation
     public List<Product> getInventoryProducts(@Min(1) @Max(16) @RequestParam @NotNull int limit,
                                               @Min(0) @Max(2147483630) @RequestParam @NotNull int offset) {
         return productService.getProductsByCategory(ProductType.inventory,limit,offset);
     }
 
     @GetMapping("getAll/food")
+    @LogExecuteTimeAnnotation
     public List<Product> getFoodProducts(@Min(1) @Max(16) @NotNull @RequestParam int limit,
                                          @Min(0) @Max(2147483630) @RequestParam @NotNull int offset) {
         return productService.getProductsByCategory(ProductType.food,limit,offset);
     }
 
     @GetMapping("getAll/clothes")
+    @LogExecuteTimeAnnotation
     public List<Product> getClothesProducts(@Min(1) @Max(16) @NotNull @RequestParam int limit,
                                             @Min(0) @Max(2147483630) @NotNull @RequestParam int offset) {
         return productService.getProductsByCategory(ProductType.clothes,limit,offset);
     }
 
     @PostMapping("getAllByIdList")
+    @LogExecuteTimeAnnotation
     public List<Product> getProductsByIds(@RequestBody String json){
 
         System.out.println("PRODUCTS IDS" + json);
@@ -72,16 +76,19 @@ public class ProductController {
     }
 
     @GetMapping("getTotal/inventory")
+    @LogExecuteTimeAnnotation
     public int getTotalInventory(){
         return productService.getTotalInventory();
     }
 
     @GetMapping("getTotal/clothes")
+    @LogExecuteTimeAnnotation
     public int getTotalClothes(){
         return productService.getTotalClothes();
     }
 
     @GetMapping("getTotal/food")
+    @LogExecuteTimeAnnotation
     public int getTotalFood(){
         return productService.getTotalFood();
     }

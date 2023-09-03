@@ -69,12 +69,12 @@ public class OrderController {
         userService.updateBonusBalance(orderRequestDto.getBonusBalance()-orderRequestDto.getBonusesToBuy(),
                 orderRequestDto.getUserId());
         //добавление товаров в покупки
-        List<Purchase> purchaseList = orderRequestDto.getProductIdsList().stream()
-                .map((item)-> Purchase.builder()
-                        .userId(orderRequestDto.getUserId())
-                        .productId(item).build())
-                .collect(Collectors.toList());
-        purchaseService.addAllPurchases(purchaseList);
+//        List<Purchase> purchaseList = orderRequestDto.getProductIdsList().stream()
+//                .map((item)-> Purchase.builder()
+//                        .userId(orderRequestDto.getUserId())
+//                        .productId(item).build())
+//                .collect(Collectors.toList());
+//        purchaseService.addAllPurchases(purchaseList);
     }
 
     @DeleteMapping("deleteOrder")

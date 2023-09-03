@@ -1,5 +1,6 @@
 package com.lisovski.mrmuscule.controllers;
 
+import com.lisovski.mrmuscule.aspect.LogExecuteTimeAnnotation;
 import com.lisovski.mrmuscule.dtos.CartRequestDto;
 import com.lisovski.mrmuscule.dtos.CartResponseDto;
 import com.lisovski.mrmuscule.dtos.AddCartRequestDto;
@@ -25,26 +26,31 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping("getCart")
+    @LogExecuteTimeAnnotation
     public CartResponseDto getCartByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         return cartService.getCartProducts(userId);
     }
 
     @GetMapping("getTotal")
+    @LogExecuteTimeAnnotation
     public int getTotalCartByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         return cartService.getTotalCart(userId);
     }
 
     @PostMapping("addProduct")
+    @LogExecuteTimeAnnotation
     public int addProduct(@Valid @RequestBody CartRequestDto cartRequestDto){
        return cartService.addProduct(cartRequestDto);
     }
 
     @GetMapping("getProductIds")
+    @LogExecuteTimeAnnotation
     public List<Integer> getProductsIds(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         return cartService.getCartProductsIds(userId);
     }
 
     @PostMapping("addCart")
+    @LogExecuteTimeAnnotation
     public int addCart(@RequestBody String json){
 
         System.out.println("json "+json);
@@ -79,11 +85,13 @@ public class CartController {
     }
 
     @DeleteMapping("deleteProduct")
+    @LogExecuteTimeAnnotation
     public void deleteProduct(@Valid @RequestBody CartRequestDto cartRequestDto){
         cartService.deleteProduct(cartRequestDto);
     }
 
     @DeleteMapping("clearCart")
+    @LogExecuteTimeAnnotation
     public void clearCart(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
         cartService.clearCart(userId);
     }

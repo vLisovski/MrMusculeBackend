@@ -1,5 +1,6 @@
 package com.lisovski.mrmuscule.controllers;
 
+import com.lisovski.mrmuscule.aspect.LogExecuteTimeAnnotation;
 import com.lisovski.mrmuscule.authservices.AuthOrRegisterService;
 import com.lisovski.mrmuscule.dtos.AuthOrRegisterResponseDto;
 import com.lisovski.mrmuscule.dtos.AuthRequestDto;
@@ -17,11 +18,13 @@ public class AuthController {
     private final AuthOrRegisterService authOrRegisterService;
 
     @PostMapping("/register")
+    @LogExecuteTimeAnnotation
     public AuthOrRegisterResponseDto register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
         return authOrRegisterService.register(registerRequestDto);
     }
 
     @PostMapping("/authenticate")
+    @LogExecuteTimeAnnotation
     public AuthOrRegisterResponseDto authenticate(@Valid @RequestBody AuthRequestDto authRequestDto) {
         return authOrRegisterService.authenticate(authRequestDto);
     }

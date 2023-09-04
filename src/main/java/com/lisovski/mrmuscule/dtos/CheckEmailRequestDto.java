@@ -1,6 +1,6 @@
 package com.lisovski.mrmuscule.dtos;
 
-import jakarta.validation.constraints.Email;
+import javax.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

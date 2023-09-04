@@ -4,13 +4,12 @@ import com.lisovski.mrmuscule.aspect.LogExecuteTimeAnnotation;
 import com.lisovski.mrmuscule.enums.ProductType;
 import com.lisovski.mrmuscule.models.Product;
 import com.lisovski.mrmuscule.services.ProductService;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
-
     @GetMapping("getAll/inventory")
     @LogExecuteTimeAnnotation
     public List<Product> getInventoryProducts(@Min(1) @Max(16) @RequestParam @NotNull int limit,

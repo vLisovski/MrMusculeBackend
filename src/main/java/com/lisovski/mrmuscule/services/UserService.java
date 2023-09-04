@@ -6,12 +6,10 @@ import com.lisovski.mrmuscule.dtos.UserResponseDto;
 import com.lisovski.mrmuscule.models.*;
 import com.lisovski.mrmuscule.repositories.ProductRepository;
 import com.lisovski.mrmuscule.repositories.UserFavoriteRepository;
-import com.lisovski.mrmuscule.repositories.UserPurchasesRepository;
 import com.lisovski.mrmuscule.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

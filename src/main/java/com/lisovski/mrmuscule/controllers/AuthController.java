@@ -5,7 +5,7 @@ import com.lisovski.mrmuscule.authservices.AuthOrRegisterService;
 import com.lisovski.mrmuscule.dtos.AuthOrRegisterResponseDto;
 import com.lisovski.mrmuscule.dtos.AuthRequestDto;
 import com.lisovski.mrmuscule.dtos.RegisterRequestDto;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

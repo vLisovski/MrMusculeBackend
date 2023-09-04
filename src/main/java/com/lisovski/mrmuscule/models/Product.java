@@ -1,8 +1,8 @@
 package com.lisovski.mrmuscule.models;
 
 import com.lisovski.mrmuscule.enums.ProductType;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

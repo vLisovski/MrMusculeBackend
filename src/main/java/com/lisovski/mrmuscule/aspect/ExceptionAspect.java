@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionAspect {
 
     @ExceptionHandler(Exception.class)
-    public int handleException(Exception e) {
+    public Exception handleException(Exception e) {
         System.out.println("ERROR " + e.getMessage());
-        return -1;
+        return e;
     }
 
 }

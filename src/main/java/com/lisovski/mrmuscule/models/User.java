@@ -48,7 +48,7 @@ public class User implements UserDetails {
     @Column(name="bonuses")
     private int bonuses;
 
-    @OneToMany(targetEntity = Order.class,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Order.class, cascade = CascadeType.ALL)
     @JoinColumn(name ="user_id",referencedColumnName = "id")
     private List<Order> ordersList;
 

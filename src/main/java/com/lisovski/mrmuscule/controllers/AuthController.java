@@ -26,6 +26,7 @@ public class AuthController {
     @PostMapping("/authenticate")
     @LogExecuteTimeAnnotation
     public AuthOrRegisterResponseDto authenticate(@Valid @RequestBody AuthRequestDto authRequestDto) {
+        System.out.println(authRequestDto);
         return authOrRegisterService.authenticate(authRequestDto);
     }
 

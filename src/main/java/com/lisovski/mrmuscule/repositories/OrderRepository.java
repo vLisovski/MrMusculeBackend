@@ -24,7 +24,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     @Query(value = "DELETE FROM orders WHERE user_id=:user_id", nativeQuery = true)
     void deleteByUserId(@Param(value = "user_id") int userId);
 
-    @Query(value = "SELECT * FROM orders WHERE user_id=:user_id", nativeQuery = true)
+    @Query(value = "SELECT * FROM orders WHERE user_id=:user_id ORDER BY date DESC", nativeQuery = true)
     List<Order> findAllByUserId(@Param(value = "user_id") int user_id);
 
 

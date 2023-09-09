@@ -36,4 +36,14 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     @Query(value="SELECT p.id, p.description, p.photo_path, p.price, p.name, p.type, p.bonuses FROM products p JOIN cart c ON p.id = c.product_id AND c.user_id=:userId", nativeQuery = true)
     List<Product> getCartProducts(@Param(value = "userId") int userId);
+
+    @Query(value="SELECT COUNT(*) FROM products WHERE tags LIKE :pattern1 OR tags LIKE :pattern2",nativeQuery = true)
+    int getTotalByTags(@Param(value = "pattern1") String tag1,
+                       @Param(value = "pattern2") String tag2);
+
+    @Query(value="SELECT * FROM products WHERE tags LIKE :pattern1 OR tags LIKE :pattern2 ORDER BY id LIMIT :limit OFFSET :offset",nativeQuery = true)
+    List<Product> getProductsByTags(@Param(value = "pattern1") String pattern1,
+                                    @Param(value = "pattern2") String pattern2,
+                                    @Param(value = "limit") int limit,
+                                    @Param(value = "offset") int offset);
 }

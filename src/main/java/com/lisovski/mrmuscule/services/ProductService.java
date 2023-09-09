@@ -37,4 +37,20 @@ public class ProductService {
     public List<Product> getProductsByIds(List<Integer> ids){
         return productRepository.findAllById(ids);
     }
+
+    public int getTotalByTags(String tag1, String tag2){
+
+        if(tag1.contains("cardio")){
+            tag1="%"+tag1;
+        }
+        System.out.println("SERVICE TOTAL TAGS "+productRepository.getTotalByTags(tag1,tag2));
+        return productRepository.getTotalByTags(tag1,tag2);
+    }
+
+    public List<Product> getProductsByTag(String tag1, String tag2, int limit, int offset){
+        if(tag1.contains("cardio")){
+            tag1="%"+tag1;
+        }
+        return productRepository.getProductsByTags(tag1,tag2,limit,offset);
+    }
 }

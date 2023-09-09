@@ -87,7 +87,24 @@ public class ProductController {
 
     @GetMapping("getTotal/food")
     @LogExecuteTimeAnnotation
-    public int getTotalFood(){
-        return productService.getTotalFood();
+    public int getTotalFood(){return productService.getTotalFood();}
+
+    @GetMapping("getTotal/target")
+    @LogExecuteTimeAnnotation
+    public int getTotalByTag(@NotNull @RequestParam String tag1,
+                             @NotNull @RequestParam String tag2){
+        System.out.println("TAG1 "+tag1);
+        System.out.println("TAG2 "+tag2);
+        System.out.println("TOTAL BY TAGS "+ productService.getTotalByTags(tag1, tag2));
+        return productService.getTotalByTags(tag1, tag2);
+    }
+
+    @GetMapping("getAll/target")
+    @LogExecuteTimeAnnotation
+    public List<Product> getAllByTag(@NotNull @RequestParam String tag1,
+                                     @NotNull @RequestParam String tag2,
+                                     @NotNull @Min(1) @Max(16) @RequestParam int limit,
+                                     @NotNull @Min(0) @Max(2147483630) @RequestParam int offset){
+        return productService.getProductsByTag(tag1,tag2,limit,offset);
     }
 }

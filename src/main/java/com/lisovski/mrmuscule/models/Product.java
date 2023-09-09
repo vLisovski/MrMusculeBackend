@@ -41,4 +41,7 @@ public class Product {
 
     @Column(name = "bonuses")
     private int bonuses;
+
+    @Column(name="tags")
+    private String tags;
 }

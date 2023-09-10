@@ -8,6 +8,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("free/products")
 @AllArgsConstructor
 @Validated
+@Slf4j
 public class ProductController {
 
     private ProductService productService;
@@ -24,6 +26,7 @@ public class ProductController {
     @LogExecuteTimeAnnotation
     public List<Product> getInventoryProducts(@Min(1) @Max(16) @RequestParam @NotNull int limit,
                                               @Min(0) @Max(2147483630) @RequestParam @NotNull int offset) {
+        log.info("GET ALL INVENTORY WITH limit="+limit+" AND offset="+offset);
         return productService.getProductsByCategory(ProductType.inventory,limit,offset);
     }
 
@@ -31,6 +34,7 @@ public class ProductController {
     @LogExecuteTimeAnnotation
     public List<Product> getFoodProducts(@Min(1) @Max(16) @NotNull @RequestParam int limit,
                                          @Min(0) @Max(2147483630) @RequestParam @NotNull int offset) {
+        log.info("GET ALL FOOD WITH limit="+limit+" AND offset="+offset);
         return productService.getProductsByCategory(ProductType.food,limit,offset);
     }
 
@@ -38,6 +42,7 @@ public class ProductController {
     @LogExecuteTimeAnnotation
     public List<Product> getClothesProducts(@Min(1) @Max(16) @NotNull @RequestParam int limit,
                                             @Min(0) @Max(2147483630) @NotNull @RequestParam int offset) {
+        log.info("GET ALL CLOTHES WITH limit="+limit+" AND offset="+offset);
         return productService.getProductsByCategory(ProductType.clothes,limit,offset);
     }
 
@@ -69,30 +74,35 @@ public class ProductController {
         for (int i = 0; i < ints.length; i++) {
             integers.add(ints[i]);
         }
-
+        log.info("GET PRODUCTS BY ID list: "+integers);
         return productService.getProductsByIds(integers);
     }
 
     @GetMapping("getTotal/inventory")
     @LogExecuteTimeAnnotation
     public int getTotalInventory(){
+        log.info("GET TOTAL NUMBER OF INVENTORY");
         return productService.getTotalInventory();
     }
 
     @GetMapping("getTotal/clothes")
     @LogExecuteTimeAnnotation
     public int getTotalClothes(){
+        log.info("GET TOTAL NUMBER OF CLOTHES");
         return productService.getTotalClothes();
     }
 
     @GetMapping("getTotal/food")
     @LogExecuteTimeAnnotation
-    public int getTotalFood(){return productService.getTotalFood();}
+    public int getTotalFood(){
+        log.info("GET TOTAL NUMBER OF FOOD");
+        return productService.getTotalFood();}
 
     @GetMapping("getTotal/target")
     @LogExecuteTimeAnnotation
     public int getTotalByTag(@NotNull @RequestParam String tag1,
                              @NotNull @RequestParam String tag2){
+        log.info("GET TOTAL NUMBER OF PRODUCTS BY tag1="+tag1+" AND tag2="+tag2);
         System.out.println("TAG1 "+tag1);
         System.out.println("TAG2 "+tag2);
         System.out.println("TOTAL BY TAGS "+ productService.getTotalByTags(tag1, tag2));
@@ -105,6 +115,7 @@ public class ProductController {
                                      @NotNull @RequestParam String tag2,
                                      @NotNull @Min(1) @Max(16) @RequestParam int limit,
                                      @NotNull @Min(0) @Max(2147483630) @RequestParam int offset){
+        log.info("GET ALL PRODUCTS BY tag1="+tag1+" AND tag2="+tag2+" WITH limit="+limit+" AND offset="+offset);
         return productService.getProductsByTag(tag1,tag2,limit,offset);
     }
 }

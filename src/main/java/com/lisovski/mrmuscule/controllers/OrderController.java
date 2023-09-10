@@ -13,12 +13,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("order")
 @AllArgsConstructor
 @Validated
+@Slf4j
 public class OrderController {
 
     private OrderService orderService;
@@ -42,7 +42,6 @@ public class OrderController {
     @Transactional
     public void addNewOrder(@RequestBody OrderRequestDto orderRequestDto){
 
-        System.out.println("ORDER "+orderRequestDto);
         //операция сохранения заказа в таблицу orders
         //присвоение серверного времени заказу
         int orderId;
@@ -67,6 +66,7 @@ public class OrderController {
         //изменение баланса бонусов
         userService.updateBonusBalance(orderRequestDto.getBonusBalance()-orderRequestDto.getBonusesToBuy(),
                 orderRequestDto.getUserId());
+        log.info("ADD ORDER "+orderRequestDto);
         //добавление товаров в покупки
 //        List<Purchase> purchaseList = orderRequestDto.getProductIdsList().stream()
 //                .map((item)-> Purchase.builder()
@@ -86,5 +86,6 @@ public class OrderController {
                 .collect(Collectors.toList());
         orderService.deleteOrderByUserId(order.getUserId());
         ordersProductsService.deleteAll(ordersProductsList);
+        log.info("DELETE ORDER "+order);
     }
 }

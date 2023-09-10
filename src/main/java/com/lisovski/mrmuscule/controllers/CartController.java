@@ -10,6 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @RequestMapping("cart")
 @AllArgsConstructor
 @Validated
+@Slf4j
 public class CartController {
 
     private CartService cartService;
@@ -27,25 +29,33 @@ public class CartController {
     @GetMapping("getCart")
     @LogExecuteTimeAnnotation
     public CartResponseDto getCartByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
-        return cartService.getCartProducts(userId);
+        CartResponseDto cartResponseDto = cartService.getCartProducts(userId);
+        log.info("GET CART FOR user_id="+userId+" with products: "+cartResponseDto.getCart());
+        return cartResponseDto;
     }
 
     @GetMapping("getTotal")
     @LogExecuteTimeAnnotation
     public int getTotalCartByUserId(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
-        return cartService.getTotalCart(userId);
+        int total = cartService.getTotalCart(userId);
+        log.info("GET CART SIZE FOR user_id="+userId+" with total number of products in cart: "+total);
+        return total;
     }
 
     @PostMapping("addProduct")
     @LogExecuteTimeAnnotation
     public int addProduct(@Valid @RequestBody CartRequestDto cartRequestDto){
-       return cartService.addProduct(cartRequestDto);
+       int addedId = cartService.addProduct(cartRequestDto);
+       log.info("ADD PRODUCT WITH ID " + cartRequestDto.getProductId() + " TO CART FOR user_id="+cartRequestDto.getUserId());
+       return addedId;
     }
 
     @GetMapping("getProductIds")
     @LogExecuteTimeAnnotation
     public List<Integer> getProductsIds(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
-        return cartService.getCartProductsIds(userId);
+        List<Integer> integerList = cartService.getCartProductsIds(userId);
+        log.info("GET PRODUCTS IDS: "+integerList+" FOR user_id="+userId);
+        return integerList;
     }
 
     @PostMapping("addCart")
@@ -86,12 +96,14 @@ public class CartController {
     @DeleteMapping("deleteProduct")
     @LogExecuteTimeAnnotation
     public void deleteProduct(@Valid @RequestBody CartRequestDto cartRequestDto){
+        log.info("DELETE PRODUCT "+cartRequestDto.getProductId()+" FROM CART OF USER WITH user_id="+cartRequestDto.getUserId());
         cartService.deleteProduct(cartRequestDto);
     }
 
     @DeleteMapping("clearCart")
     @LogExecuteTimeAnnotation
     public void clearCart(@Min(0) @Max(2147483647) @NotNull @RequestParam int userId){
+        log.info("CLEAR CART FOR USER WITH user_id="+userId);
         cartService.clearCart(userId);
     }
 }

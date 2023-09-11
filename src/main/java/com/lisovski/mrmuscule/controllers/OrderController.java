@@ -64,7 +64,8 @@ public class OrderController {
         System.out.println("ORDER "+ordersProductsList);
         ordersProductsService.saveAll(ordersProductsList);
         //изменение баланса бонусов
-        userService.updateBonusBalance(orderRequestDto.getBonusBalance()-orderRequestDto.getBonusesToBuy(),
+        userService.updateBonusBalance(orderRequestDto.getBonusBalance()-orderRequestDto.getBonusesToBuy()
+                        +orderRequestDto.getBonusBoost(),
                 orderRequestDto.getUserId());
         log.info("ADD ORDER "+orderRequestDto);
         //добавление товаров в покупки

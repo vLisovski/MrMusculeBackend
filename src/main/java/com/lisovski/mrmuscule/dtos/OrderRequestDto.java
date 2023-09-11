@@ -32,6 +32,10 @@ public class OrderRequestDto {
     @Max(2147483647)
     private int bonusBalance;
 
+    @Min(0)
+    @Max(2147483647)
+    private int bonusBoost;
+
     @NotNull
     @Min(0)
     @Max(2147483647)

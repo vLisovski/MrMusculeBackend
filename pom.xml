@@ -11,7 +11,7 @@
     <groupId>com.lisovski</groupId>
     <artifactId>mrmuscule</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>mrmuscule</name>
     <description>mrmuscule</description>
     <properties>
@@ -35,10 +35,15 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.28</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
